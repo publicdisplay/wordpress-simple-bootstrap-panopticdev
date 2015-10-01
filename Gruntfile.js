@@ -62,14 +62,14 @@ module.exports = function(grunt) {
     compress: {
       main: {
         options: {
-          archive: 'simple-bootstrap.zip'
+          archive: 'panopticdev.zip'
         },
         files: [
           {
             src: ['**'],
             dest: '/',
             filter: function(path) {
-              if (/^simple-bootstrap.zip$/.test(path) ||
+              if (/^panopticdev.zip$/.test(path) ||
                 /^bower_components\b\/?/.test(path) ||
                 /^node_modules\b\/?/.test(path)
                 ) {
