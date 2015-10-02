@@ -22,12 +22,12 @@ module.exports = function(grunt) {
     watch: {
       less: {
         files: "less/**.less",
-        tasks: ['less']
+        tasks: ['less', 'imagemin']
       },
       cssmin: {
         files: ["style.css"],
-        tasks: ['cssmin'],
-      },
+        tasks: ['cssmin']
+      }
     },
     cssmin: {
       dist: {
@@ -47,6 +47,19 @@ module.exports = function(grunt) {
         }
       }
     },
+    imagemin: {
+      images: {
+        options: {
+          optimizationLevel: 3
+        },
+        files: [{
+          expand: true,
+          cwd: 'src/images/',
+          src: ['**/*.{png,jpg,gif}'],
+          dest: 'images/'
+        }]
+      }
+    },
     copy: {
       js: {
         files: [
@@ -62,16 +75,17 @@ module.exports = function(grunt) {
     compress: {
       main: {
         options: {
-          archive: 'panopticdev.zip'
+          archive: 'simple-bootstrap-panopticdev.zip'
         },
         files: [
           {
             src: ['**'],
             dest: '/',
             filter: function(path) {
-              if (/^panopticdev.zip$/.test(path) ||
+              if (/^simple-bootstrap-panopticdev.zip$/.test(path) ||
                 /^bower_components\b\/?/.test(path) ||
-                /^node_modules\b\/?/.test(path)
+                /^node_modules\b\/?/.test(path) ||
+                /^src\b\/?/.test(path)
                 ) {
                 return false;
               }
@@ -90,8 +104,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-compress');
+  grunt.loadNpmTasks('grunt-contrib-imagemin');
 
-  grunt.registerTask('make', ['less', 'uglify', 'copy:fonts', 'copy:js']);
+  grunt.registerTask('make', ['less', 'uglify', 'copy:fonts', 'copy:js', 'imagemin']);
   grunt.registerTask('dist', ['make', 'compress']);
   grunt.registerTask('watcher', ['make', 'watch']);
 

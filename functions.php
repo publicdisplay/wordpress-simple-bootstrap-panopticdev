@@ -18,11 +18,14 @@ function simple_boostrap_theme_support() {
     add_theme_support( 'title-tag' );
     register_nav_menus(                      // wp3+ menus
         array( 
-            'main_nav' => __('Main Menu', 'simple-bootstrap'),   // main nav in header
+            'main_nav' => __('Main Menu', 'simple-bootstrap-panopticdev'),
+            'button_nav' => __('Main Menu Buttons', 'simple-bootstrap-panopticdev'),
+            'footer_nav' => __('Footer Menu', 'simple-bootstrap-panopticdev'),
+            'social_nav' => __('Social Menu', 'simple-bootstrap-panopticdev'),
         )
     );
     add_image_size( 'simple_boostrap_featured', 1140, 1140 * (9 / 21), true);
-    load_theme_textdomain( 'simple-bootstrap', get_template_directory() . '/languages' );
+    load_theme_textdomain( 'simple-bootstrap-panopticdev', get_template_directory() . '/languages' );
 }
 add_action('after_setup_theme','simple_boostrap_theme_support');
 
@@ -57,8 +60,8 @@ if ( ! isset( $content_width ) )
 function simple_boostrap_register_sidebars() {
     register_sidebar(array(
         'id' => 'sidebar-right',
-        'name' => __('Right Sidebar', 'simple-bootstrap'),
-        'description' => __('Used on every page.', 'simple-bootstrap'),
+        'name' => __('Right Sidebar', 'simple-bootstrap-panopticdev'),
+        'description' => __('Used on every page.', 'simple-bootstrap-panopticdev'),
         'before_widget' => '<div id="%1$s" class="widget %2$s">',
         'after_widget' => '</div>',
         'before_title' => '<h4 class="widgettitle">',
@@ -66,8 +69,8 @@ function simple_boostrap_register_sidebars() {
     ));
     register_sidebar(array(
     	'id' => 'sidebar-left',
-    	'name' => __('Left Sidebar', 'simple-bootstrap'),
-    	'description' => __('Used on every page.', 'simple-bootstrap'),
+    	'name' => __('Left Sidebar', 'simple-bootstrap-panopticdev'),
+    	'description' => __('Used on every page.', 'simple-bootstrap-panopticdev'),
     	'before_widget' => '<div id="%1$s" class="widget %2$s">',
     	'after_widget' => '</div>',
     	'before_title' => '<h4 class="widgettitle">',
@@ -76,7 +79,7 @@ function simple_boostrap_register_sidebars() {
     
     register_sidebar(array(
       'id' => 'footer1',
-      'name' => __('Footer', 'simple-bootstrap'),
+      'name' => __('Footer', 'simple-bootstrap-panopticdev'),
       'before_widget' => '<div id="%1$s" class="widget col-xs-6 col-sm-4 col-md-3 %2$s">',
       'after_widget' => '</div>',
       'before_title' => '<h4 class="widgettitle">',
@@ -167,8 +170,58 @@ function simple_bootstrap_display_main_menu() {
             'theme_location' => 'main_nav', /* where in the theme it's assigned */
             'menu' => 'main_nav', /* menu name */
             'menu_class' => 'nav navbar-nav',
+            'menu_id' => 'simple-bootstrap-main-nav',
             'container' => false, /* container class */
             'depth' => 2,
+            'walker' => new simple_bootstrap_Bootstrap_walker(),
+        )
+    );
+}
+
+function simple_bootstrap_display_action_button_menu_special_class($atts, $item) {
+  // $atts['class'] = "btn btn-primary";
+  return $atts;
+}
+
+function simple_bootstrap_display_action_button_menu() {
+    add_filter('nav_menu_link_attributes' , 'simple_bootstrap_display_action_button_menu_special_class', 10, 2);
+
+    wp_nav_menu(
+        array( 
+            'theme_location' => 'button_nav', /* where in the theme it's assigned */
+            'menu' => 'button_nav', /* menu name */
+            'menu_class' => 'nav navbar-nav navbar-right',
+            'menu_id' => 'simple-bootstrap-button-nav',
+            'container' => false, /* container class */
+            'depth' => 1
+        )
+    );
+    
+    remove_filter('nav_menu_link_attributes' , 'simple_bootstrap_display_action_button_menu_special_class', 10);
+}
+
+function simple_bootstrap_display_footer_menu() {
+    wp_nav_menu(
+        array( 
+            'theme_location' => 'footer_nav', /* where in the theme it's assigned */
+            'menu' => 'footer_nav', /* menu name */
+            'menu_class' => 'list-inline',
+            'menu_id' => 'simple-bootstrap-footer-nav',
+            'container' => false, /* container class */
+            'depth' => 1
+        )
+    );
+}
+
+function simple_bootstrap_display_social_menu() {
+    wp_nav_menu(
+        array( 
+            'theme_location' => 'social_nav', /* where in the theme it's assigned */
+            'menu' => 'social_nav', /* menu name */
+            'menu_class' => 'nav navbar-nav',
+            'menu_id' => 'simple-bootstrap-social-nav',
+            'container' => false, /* container class */
+            'depth' => 1,
             'walker' => new simple_bootstrap_Bootstrap_walker(),
         )
     );
@@ -215,8 +268,8 @@ function simple_boostrap_page_navi() {
     <?php if (get_next_posts_link() || get_previous_posts_link()) { ?>
         <nav class="block">
             <ul class="pager pager-unspaced">
-                <li class="previous"><?php next_posts_link("&laquo; " . __('Older posts', "default")); ?></li>
-                <li class="next"><?php previous_posts_link(__('Newer posts', "default") . " &raquo;"); ?></li>
+                <li class="previous"><?php next_posts_link('<span class="glyphicon glyphicon-chevron-left"></span> ' . __('Older posts', "default")); ?></li>
+                <li class="next"><?php previous_posts_link(__('Newer posts', "default") . ' <span class="glyphicon glyphicon-chevron-right"></span>'); ?></li>
             </ul>
         </nav>
     <?php } ?>
