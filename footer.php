@@ -7,6 +7,17 @@
                 <div class="container">
                     <div class="row">
                         <?php dynamic_sidebar('footer1'); ?>
+                        
+                        <?php if (has_nav_menu("social_nav")): ?>
+                        <div class="col-xs-12 col-sm-6 col-sm-4">
+                          <h4>Contact Us</h4>
+                          <div>
+                            <?php
+                              simple_bootstrap_display_social_menu();
+                            ?>
+                          </div>
+                        </div>
+                        <?php endif ?>                          
                     </div>
                     <div class="row" id="copyright">
                         <div class="col-sm-12 col-md-6">

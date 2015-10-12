@@ -153,6 +153,120 @@ class simple_bootstrap_Bootstrap_walker extends Walker_Nav_Menu {
     }
 }
 
+class simple_bootstrap_Bootstrap_dl_walker extends Walker_Nav_Menu {
+
+    function start_el(&$output, $object, $depth = 0, $args = Array(), $current_object_id = 0) {
+
+        $indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
+        
+        $classes = empty( $object->classes ) ? array() : (array) $object->classes;
+        $classes[] = 'menu-item-' . $object->ID;
+        
+        /**
+         * Filter the CSS class(es) applied to a menu item's list item element.
+         *
+         * @since 3.0.0
+         * @since 4.1.0 The `$depth` parameter was added.
+         *
+         * @param array  $classes The CSS classes that are applied to the menu item's `<li>` element.
+         * @param object $item    The current menu item.
+         * @param array  $args    An array of {@see wp_nav_menu()} arguments.
+         * @param int    $depth   Depth of menu item. Used for padding.
+         */
+        $class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $object, $args, $depth ) );
+        $class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
+        
+        /**
+         * Filter the ID applied to a menu item's list item element.
+         *
+         * @since 3.0.1
+         * @since 4.1.0 The `$depth` parameter was added.
+         *
+         * @param string $menu_id The ID that is applied to the menu item's `<li>` element.
+         * @param object $item    The current menu item.
+         * @param array  $args    An array of {@see wp_nav_menu()} arguments.
+         * @param int    $depth   Depth of menu item. Used for padding.
+         */
+        $id = apply_filters( 'nav_menu_item_id', 'menu-item-'. $object->ID, $object, $args, $depth );
+        $id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
+
+        $atts = array();
+        $atts['title']  = ! empty( $object->attr_title ) ? $object->attr_title : '';
+        $atts['target'] = ! empty( $object->target )     ? $object->target     : '';
+        $atts['rel']    = ! empty( $object->xfn )        ? $object->xfn        : '';
+        $atts['href']   = ! empty( $object->url )        ? $object->url        : '';
+        
+        $output .= $indent . '<dt>' . $object->description .":</dt>\n";
+        $output .= $indent . '<dd' . $id . $class_names .'>';
+        
+        /**
+         * Filter the HTML attributes applied to a menu item's anchor element.
+         *
+         * @since 3.6.0
+         * @since 4.1.0 The `$depth` parameter was added.
+         *
+         * @param array $atts {
+         *     The HTML attributes applied to the menu item's `<a>` element, empty strings are ignored.
+         *
+         *     @type string $title  Title attribute.
+         *     @type string $target Target attribute.
+         *     @type string $rel    The rel attribute.
+         *     @type string $href   The href attribute.
+         * }
+         * @param object $item  The current menu item.
+         * @param array  $args  An array of {@see wp_nav_menu()} arguments.
+         * @param int    $depth Depth of menu item. Used for padding.
+         */
+        $atts = apply_filters( 'nav_menu_link_attributes', $atts, $object, $args, $depth );
+        
+        $attributes = '';
+        foreach ( $atts as $attr => $value ) {
+                if ( ! empty( $value ) ) {
+                        $value = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
+                        $attributes .= ' ' . $attr . '="' . $value . '"';
+                }
+        }
+        
+        $item_output = $args->before;
+        $item_output .= '<a'. $attributes .'>';
+        /** This filter is documented in wp-includes/post-template.php */
+        $item_output .= $args->link_before . apply_filters( 'the_title', $object->title, $object->ID ) . $args->link_after;
+        $item_output .= '</a>';
+        $item_output .= $args->after;
+        
+        /**
+         * Filter a menu item's starting output.
+         *
+         * The menu item's starting output only includes `$args->before`, the opening `<a>`,
+         * the menu item's title, the closing `</a>`, and `$args->after`. Currently, there is
+         * no filter for modifying the opening and closing `<li>` for a menu item.
+         *
+         * @since 3.0.0
+         *
+         * @param string $item_output The menu item's starting HTML output.
+         * @param object $item        Menu item data object.
+         * @param int    $depth       Depth of menu item. Used for padding.
+         * @param array  $args        An array of {@see wp_nav_menu()} arguments.
+         */
+        $output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $object, $depth, $args );
+
+    } // end start_el function
+    
+    function end_el(&$output, $item, $depth = 0, $args = Array()) {
+        $output .= "</dd>\n";
+    }
+    
+    function start_lvl(&$output, $depth = 0, $args = Array()) {
+        $indent = str_repeat("\t", $depth);
+        $output .= "\n$indent<dl class='dl-horizontal' role='menu'>\n";
+    }
+    
+    function end_lvl(&$output, $depth = 0, $args = Array()) {
+        $indent = str_repeat("\t", $depth);
+        $output .= "$indent</dl>\n";
+    }
+}
+
 // Add Twitter Bootstrap's standard 'active' class name to the active nav link item
 function simple_bootstrap_add_active_class($classes, $item) {
     if( in_array('current-menu-item', $classes) ) {
@@ -179,14 +293,7 @@ function simple_bootstrap_display_main_menu() {
     );
 }
 
-function simple_bootstrap_display_action_button_menu_special_class($atts, $item) {
-  // $atts['class'] = "btn btn-primary";
-  return $atts;
-}
-
 function simple_bootstrap_display_action_button_menu() {
-    add_filter('nav_menu_link_attributes' , 'simple_bootstrap_display_action_button_menu_special_class', 10, 2);
-
     wp_nav_menu(
         array( 
             'theme_location' => 'button_nav', /* where in the theme it's assigned */
@@ -197,8 +304,6 @@ function simple_bootstrap_display_action_button_menu() {
             'depth' => 1
         )
     );
-    
-    remove_filter('nav_menu_link_attributes' , 'simple_bootstrap_display_action_button_menu_special_class', 10);
 }
 
 function simple_bootstrap_display_footer_menu() {
@@ -219,14 +324,15 @@ function simple_bootstrap_display_social_menu() {
         array( 
             'theme_location' => 'social_nav', /* where in the theme it's assigned */
             'menu' => 'social_nav', /* menu name */
-            'menu_class' => 'nav navbar-nav',
+            'menu_class' => 'dl-horizontal',
             'menu_id' => 'simple-bootstrap-social-nav',
             'container' => false, /* container class */
-            'depth' => 1 /*,
-            'walker' => new simple_bootstrap_Bootstrap_walker(), */
+            'depth' => 1,
+            'walker' => new simple_bootstrap_Bootstrap_dl_walker(),
+            'items_wrap' => '<dl role="menu" id="%1$s" class="%2$s">%3$s</dl>'
         )
     );
-}
+  }
 
 /*
   A function used in multiple places to generate the metadata of a post.

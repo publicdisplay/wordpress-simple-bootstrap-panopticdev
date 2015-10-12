@@ -43,6 +43,16 @@ body {
   width: auto !important;
 }
 
+#simple-bootstrap-social-nav {
+  dt {
+    width: 80px;
+    text-align: left;
+  }
+  dd {
+    margin-left: 90px;
+  }
+}
+
 footer {
   background: url(./images/branding/bg-footer.jpg) repeat-x;
   font-size: @font-size-small;
@@ -50,6 +60,8 @@ footer {
   
   h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     color: @gray-lighter;
+    font-family: @font-family-sans-serif;
+    font-weight: 800;
   }
   
   #inner-footer {
@@ -57,7 +69,7 @@ footer {
     padding: 40px 0 50px;
     
     a, a:hover, a:active {
-      color: @gray-light;        
+      color: @brand-primary;
     }
 
     .post-date {
@@ -68,6 +80,10 @@ footer {
   #copyright {
     border-top: 1px solid @gray-darker;
     padding: 18px 0 0;
+
+    a, a:hover, a:active {
+      color: @gray-light;        
+    }
   }
 }
 
