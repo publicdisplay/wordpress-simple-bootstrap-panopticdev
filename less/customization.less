@@ -9,11 +9,8 @@
 @footer-padding: 20px;
 
 body {
-  background: #fbfbfb url(./images/branding/bg-wrapper.jpg);
-  
-  &.home {
-    background: #001 url(./images/branding/bg-body.jpg);
-  }
+  /* background: #fbfbfb url(./images/branding/bg-wrapper.jpg); */
+  background: #001 url(./images/branding/bg-body.jpg);
 }
 
 .btn-primary {
@@ -34,41 +31,74 @@ body {
   }
 }
 
-// Large grid
-//
-// Columns, offsets, pushes, and pulls for the large desktop device range.
+#disqus_thread {
+  .block;
+}
 
+#mc-embedded-subscribe {
+  .btn;
+  .btn-default;
+}
+
+#mc_embed_signup {
+  width: auto !important;
+}
+
+footer {
+  background: url(./images/branding/bg-footer.jpg) repeat-x;
+  font-size: @font-size-small;
+  color: @gray-light;
+  
+  h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    color: @gray-lighter;
+  }
+  
+  #inner-footer {
+    background-color: transparent;
+    padding: 40px 0 50px;
+    
+    a, a:hover, a:active {
+      color: @gray-light;        
+    }
+
+    .post-date {
+      color: @gray;
+    }
+  }
+  
+  #copyright {
+    border-top: 1px solid @gray-darker;
+    padding: 18px 0 0;
+  }
+}
+
+// Large grid
 @media (min-width: @screen-lg-min) {
 }
 
 
-// Medium grid
-//
-// Columns, offsets, pushes, and pulls for the desktop device range.
-
+// Medium grid and larger
 @media (min-width: @screen-md-min) {
-  #content-wrapper  {
-    & > header {
-      /* background: url(./images/branding/bg-top-area.jpg) repeat-x; */
-      /* background: url(./images/branding/bg-top-section.jpg) repeat-x 0 100%; */
-      
-      nav {
-        /* background: url(./images/branding/bg-header.png) repeat-x 0 100%; */
-        /* background: url(./images/branding/bg-top-heading.jpg) no-repeat 50% 100%; */
-        background: url(./images/branding/bg-header-bordered.jpg) repeat-x 0% 100%;
-        margin-bottom: 0;
-        border-width: 0;
+  header {      
+    .navbar-default {
+      background: url(./images/branding/bg-header-bordered.jpg) repeat-x 0% 100%;
+      margin-bottom: 0;
+      border-width: 0;
         
-        & > .container {
-          /* background: url(./images/branding/bg-header.png) repeat-x 0 100%; */
-          
-          .navbar-header {
-            .navbar-brand {
-              padding-top: 0;
-            }
-          }
+      .navbar-header {
+        .navbar-brand {
+          padding-top: 0;
         }
       }
+      
+      .navbar-nav {
+        & > li {
+          & > a {
+            padding-left: @padding-large-horizontal;
+            padding-right: @padding-large-horizontal;
+          }
+        }
+      }      
     }
   }
   
@@ -88,30 +118,84 @@ body {
     li a {
       .btn;
       .btn-primary;
+      padding-left: @padding-large-horizontal;
+      padding-right: @padding-large-horizontal;      
     }
   }
 
-  #page-content {
-    /* background: #fbfbfb url(images/branding/bg-wrapper.jpg); */
-    
+  #page-content {    
     & > .container {
       margin-top: 21px;
     }
   }
+  
+  #simple-bootstrap-footer-nav li {
+    padding: 0 @padding-small-horizontal;
+  }
 }
 
+// Medium grid only!
+@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+  header {      
+    .navbar-default { 
+      .navbar-nav {
+        & > li {
+          & > a {
+            padding-left: @padding-small-horizontal;
+            padding-right: @padding-small-horizontal;
+          }
+        }
+      }
+    }
+  }
+}
 
-// Small grid
-//
-// Columns, offsets, pushes, and pulls for the small device range, from phones
-// to tablets.
-
+// Small grid and smaller
 @media (max-width: @screen-sm-max) {
+  header {
+    .navbar-default {
+      .navbar-header {
+        background: url(./images/branding/pan-logo-white-40.png) no-repeat 15px 5px;
+        
+        .navbar-brand {
+          font-family: @font-family-sans-serif;
+          text-transform: uppercase;
+          font-weight: 500;
+          padding-left: 60px;
+        }
+      }
+    }
+  }
+
   #simple-bootstrap-main-nav {
+    margin-top: 0;
     margin-bottom: 0;
+    
+    li {
+      -webkit-box-shadow: inset 0px -1px 0px 0px rgba(255, 255, 255, 0.05);
+      -moz-box-shadow:    inset 0px -1px 0px 0px rgba(255, 255, 255, 0.05);
+      box-shadow:         inset 0px -1px 0px 0px rgba(255, 255, 255, 0.05);
+    }
   }
 
   #simple-bootstrap-button-nav {
     margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+// Extra small grid
+@media (max-width: @screen-xs-max) {
+  header {
+    .navbar-default {
+      .navbar-header {
+        background: transparent;
+        
+        .navbar-brand {
+          padding-left: 15px;
+          font-weight: 400;
+        }
+      }
+    }
   }
 }

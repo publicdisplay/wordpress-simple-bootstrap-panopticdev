@@ -28,7 +28,9 @@
 						<?php endif ?>
             <a class="navbar-brand" title="<?php bloginfo('description'); ?>" href="<?php echo esc_url(home_url('/')); ?>">
               <img class="hidden-xs hidden-sm" width="108" height="141" src="<?php echo get_template_directory_uri().'/images/branding/logo.png' ?>" alt="<?php bloginfo('name'); ?>">
-              <span class="hidden-md hidden-lg"><?php bloginfo('name'); ?></span>
+              <span class="hidden-md hidden-lg">
+                <?php bloginfo('name'); ?>
+              </span>
             </a>
 					</div>
           

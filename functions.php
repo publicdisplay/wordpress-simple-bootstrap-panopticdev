@@ -67,6 +67,7 @@ function simple_boostrap_register_sidebars() {
         'before_title' => '<h4 class="widgettitle">',
         'after_title' => '</h4>',
     ));
+    
     register_sidebar(array(
     	'id' => 'sidebar-left',
     	'name' => __('Left Sidebar', 'simple-bootstrap-panopticdev'),
@@ -80,7 +81,7 @@ function simple_boostrap_register_sidebars() {
     register_sidebar(array(
       'id' => 'footer1',
       'name' => __('Footer', 'simple-bootstrap-panopticdev'),
-      'before_widget' => '<div id="%1$s" class="widget col-xs-6 col-sm-4 col-md-3 %2$s">',
+      'before_widget' => '<div id="%1$s" class="widget col-xs-12 col-sm-6 col-sm-4 %2$s">',
       'after_widget' => '</div>',
       'before_title' => '<h4 class="widgettitle">',
       'after_title' => '</h4>',
@@ -205,7 +206,7 @@ function simple_bootstrap_display_footer_menu() {
         array( 
             'theme_location' => 'footer_nav', /* where in the theme it's assigned */
             'menu' => 'footer_nav', /* menu name */
-            'menu_class' => 'list-inline',
+            'menu_class' => 'list-inline navbar-right',
             'menu_id' => 'simple-bootstrap-footer-nav',
             'container' => false, /* container class */
             'depth' => 1
@@ -221,8 +222,8 @@ function simple_bootstrap_display_social_menu() {
             'menu_class' => 'nav navbar-nav',
             'menu_id' => 'simple-bootstrap-social-nav',
             'container' => false, /* container class */
-            'depth' => 1,
-            'walker' => new simple_bootstrap_Bootstrap_walker(),
+            'depth' => 1 /*,
+            'walker' => new simple_bootstrap_Bootstrap_walker(), */
         )
     );
 }
