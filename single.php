@@ -6,7 +6,7 @@
 
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 		
-		<?php simple_boostrap_display_post(false); ?>
+		<?php simple_boostrap_display_post(false, false); ?>
 		
 		<?php comments_template('',true); ?>
 		

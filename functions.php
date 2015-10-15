@@ -384,7 +384,7 @@ function simple_boostrap_page_navi() {
     <?php
 }
 
-function simple_boostrap_display_post($multiple_on_page) { ?>
+function simple_boostrap_display_post($multiple_on_page = false, $show_meta = true) { ?>
 
     <article id="post-<?php the_ID(); ?>" <?php post_class("block"); ?> role="article">
         
@@ -410,7 +410,9 @@ function simple_boostrap_display_post($multiple_on_page) { ?>
             </div>
             <?php } ?>
 
+            <?php if ($show_meta) : ?>
             <?php simple_bootstrap_display_post_meta() ?>
+            <?php endif ?>
         
         </header>
     
