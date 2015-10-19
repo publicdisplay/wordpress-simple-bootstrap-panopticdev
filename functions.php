@@ -13,12 +13,13 @@ function simple_boostrap_theme_support() {
     set_post_thumbnail_size(125, 125, true);   // default thumb size
     add_theme_support('automatic-feed-links'); // rss thingy
     add_theme_support( 'title-tag' );
-    register_nav_menus(                      // wp3+ menus
+    register_nav_menus(                        // wp3+ menus
         array( 
-            'main_nav' => __('Main Menu', 'simple-bootstrap-panopticdev'),
-            'button_nav' => __('Main Menu Buttons', 'simple-bootstrap-panopticdev'),
-            'footer_nav' => __('Footer Menu', 'simple-bootstrap-panopticdev'),
-            'social_nav' => __('Social Menu', 'simple-bootstrap-panopticdev'),
+            'main_nav'    => __('Main Menu', 'simple-bootstrap-panopticdev'),
+            'button_nav'  => __('Main Menu Buttons', 'simple-bootstrap-panopticdev'),
+            'footer_nav'  => __('Footer Menu', 'simple-bootstrap-panopticdev'),
+            'social_nav'  => __('Social Menu', 'simple-bootstrap-panopticdev'),
+            'contact_nav' => __('Contact Aside Menu', 'simple-bootstrap-panopticdev'),
         )
     );
     add_image_size( 'simple_boostrap_featured', 1140, 1140 * (9 / 21), true);
@@ -66,7 +67,7 @@ function simple_boostrap_register_sidebars() {
     register_sidebar(array(
         'id' => 'sidebar-right',
         'name' => __('Right Sidebar', 'simple-bootstrap-panopticdev'),
-        'description' => __('Used on every page.', 'simple-bootstrap-panopticdev'),
+        'description' => __('A right-hand sidebar for the default post format, separate from the page content.', 'simple-bootstrap-panopticdev'),
         'before_widget' => '<div id="%1$s" class="widget %2$s">',
         'after_widget' => '</div>',
         'before_title' => '<h4 class="widgettitle">',
@@ -76,7 +77,7 @@ function simple_boostrap_register_sidebars() {
     register_sidebar(array(
     	'id' => 'sidebar-left',
     	'name' => __('Left Sidebar', 'simple-bootstrap-panopticdev'),
-    	'description' => __('Used on every page.', 'simple-bootstrap-panopticdev'),
+      'description' => __('A left-hand sidebar for the default post format, separate from the page content.', 'simple-bootstrap-panopticdev'),
     	'before_widget' => '<div id="%1$s" class="widget %2$s">',
     	'after_widget' => '</div>',
     	'before_title' => '<h4 class="widgettitle">',
@@ -86,12 +87,22 @@ function simple_boostrap_register_sidebars() {
     register_sidebar(array(
       'id' => 'footer1',
       'name' => __('Footer', 'simple-bootstrap-panopticdev'),
-      'before_widget' => '<div id="%1$s" class="widget col-xs-12 col-sm-6 col-sm-4 %2$s">',
+      'description' => __('Content for the top part of the footer area in the default and full-page post format. The Social Menu is already included as the last widget for this area. Each additional widget is afforded a 1/3 of the available width on the desktop version.', 'simple-bootstrap-panopticdev'),
+      'before_widget' => '<div id="%1$s" class="widget col-xs-12 col-sm-6 col-md-4 %2$s">',
       'after_widget' => '</div>',
       'before_title' => '<h4 class="widgettitle">',
       'after_title' => '</h4>',
     ));
     
+    register_sidebar(array(
+    	'id' => 'contact-aside',
+    	'name' => __('Contact Aside', 'simple-bootstrap-panopticdev'),
+    	'description' => __('Used only in the \'full-page with contact aside\' post format. The Contact Aside Menu is already included as the first widget for this area.', 'simple-bootstrap-panopticdev'),
+    	'before_widget' => '<div id="%1$s" class="widget %2$s">',
+    	'after_widget' => '</div>',
+    	'before_title' => '<h4 class="widgettitle">',
+    	'after_title' => '</h4>',
+    ));    
 }
 add_action( 'widgets_init', 'simple_boostrap_register_sidebars' );
 
@@ -337,7 +348,22 @@ function simple_bootstrap_display_social_menu() {
             'items_wrap' => '<dl role="menu" id="%1$s" class="%2$s">%3$s</dl>'
         )
     );
-  }
+}
+
+function simple_bootstrap_display_contact_aside_menu() {
+    wp_nav_menu(
+        array( 
+            'theme_location' => 'contact_nav', /* where in the theme it's assigned */
+            'menu' => 'contact_nav', /* menu name */
+            'menu_class' => 'dl-horizontal',
+            'menu_id' => 'simple-bootstrap-contact-nav',
+            'container' => false, /* container class */
+            'depth' => 1,
+            'walker' => new simple_bootstrap_Bootstrap_dl_walker(),
+            'items_wrap' => '<dl role="menu" id="%1$s" class="%2$s">%3$s</dl>'
+        )
+    );
+}
 
 /*
   A function used in multiple places to generate the metadata of a post.
@@ -389,7 +415,7 @@ function simple_boostrap_page_navi() {
     <?php
 }
 
-function simple_boostrap_display_post($multiple_on_page = false, $show_meta = true) { ?>
+function simple_boostrap_display_post($multiple_on_page = false, $show_meta = true, $use_contact_aside = false) { ?>
 
     <article id="post-<?php the_ID(); ?>" <?php post_class("block"); ?> role="article">
         
@@ -422,6 +448,10 @@ function simple_boostrap_display_post($multiple_on_page = false, $show_meta = tr
         </header>
     
         <section class="post_content">
+            <?php if ($use_contact_aside) : ?>
+            <div class="row">
+                <div class="col-md-8">
+            <?php endif ?>
             <?php
             if ($multiple_on_page) {
                 the_excerpt();
@@ -430,6 +460,13 @@ function simple_boostrap_display_post($multiple_on_page = false, $show_meta = tr
                 wp_link_pages();
             }
             ?>
+            <?php if ($use_contact_aside) : ?>
+                </div>
+                <div class="col-md-4 aside">
+                   <?php get_sidebar( 'contact-aside' ); ?>
+                </div>
+            </div>
+            <?php endif ?>
         </section>
         
         <footer>
