@@ -22,9 +22,17 @@ function simple_boostrap_theme_support() {
         )
     );
     add_image_size( 'simple_boostrap_featured', 1140, 1140 * (9 / 21), true);
+    add_image_size( 'Medium-Large', 512, 512, false);
     load_theme_textdomain( 'simple-bootstrap-panopticdev', get_template_directory() . '/languages' );
 }
 add_action('after_setup_theme','simple_boostrap_theme_support');
+
+function simple_boostrap_add_custom_image_sizes( $sizes ) {
+    return array_merge( $sizes, array(
+        'medium-large' => __( 'Medium-Large' ),
+    ) );
+}
+add_filter( 'image_size_names_choose', 'simple_boostrap_custom_image_sizes');
 
 function simple_bootstrap_theme_scripts() { 
     // For child themes
