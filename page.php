@@ -19,7 +19,7 @@
 		</article>
 		
 		<?php endif; ?>
-
+    
 	</div>
 
 	<?php get_sidebar("left"); ?>
@@ -28,3 +28,4 @@
 </div>
 
 <?php get_footer(); ?>
+

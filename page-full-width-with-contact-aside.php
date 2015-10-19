@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Full Width Page
+Template Name: Full Width Page with Contact Aside
 */
 ?>
 
@@ -12,7 +12,7 @@ Template Name: Full Width Page
 
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 		
-		<?php simple_boostrap_display_post(false, false); ?>
+		<?php simple_boostrap_display_post(false, false, true); ?>
 		
 		<?php comments_template(); ?>
 		
