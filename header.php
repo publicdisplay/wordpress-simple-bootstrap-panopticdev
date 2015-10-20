@@ -54,4 +54,3 @@
 		</header>
 
 		<div id="page-content">
-			<div class="container">

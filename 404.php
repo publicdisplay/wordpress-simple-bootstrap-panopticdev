@@ -1,23 +1,27 @@
 <?php get_header(); ?>
 
-<div id="content" class="row">
+<div class="container">
 
-	<div id="main" class="col-sm-12" role="main">
+  <div id="content" class="row">
 
-		<article id="post-not-found" class="block">
+  	<div id="main" class="col-sm-12" role="main">
+
+  		<article id="post-not-found" class="block">
 		
-			<section class="post_content">
+  			<section class="post_content">
 				
-				<p>
-					<?php _e("Page not found", "default"); ?>
-				</p>
-				<?php get_search_form(); ?>
+  				<p>
+  					<?php _e("Page not found", "default"); ?>
+  				</p>
+  				<?php get_search_form(); ?>
 		
-			</section>
+  			</section>
 		
-		</article>
+  		</article>
 
-	</div>
+  	</div>
+
+  </div>
 
 </div>
 

@@ -1,6 +1,5 @@
 		
-    	   </div>
-        </div>
+        </div><!-- END #page-content -->
             
         <footer>
             <div id="inner-footer" class="vertical-nav">
@@ -35,9 +34,9 @@
             </div>
         </footer>
 
-    </div>
+    </div><!-- END #content-wrapper -->
 
-	<?php wp_footer(); // js scripts are inserted using this function ?>
+	  <?php wp_footer(); // js scripts are inserted using this function ?>
 
 </body>
 

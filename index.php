@@ -1,31 +1,35 @@
 <?php get_header(); ?>
 
-<div id="content" class="row">
+<div class="container">
 
-	<div id="main" class="<?php simple_boostrap_main_classes(); ?>" role="main">
+  <div id="content" class="row">
 
-		<?php if (have_posts()) : ?>
+  	<div id="main" class="<?php simple_boostrap_main_classes(); ?>" role="main">
 
-		<?php while (have_posts()) : the_post(); ?>
-		
-		<?php simple_boostrap_display_post(['multiple_on_page' => true]); ?>
-		
-		<?php endwhile; ?>	
-		
-		<?php simple_boostrap_page_navi(); ?>	
-		
-		<?php else : ?>
-		
-		<article id="post-not-found" class="block">
-		    <p><?php _e("No posts found.", "default"); ?></p>
-		</article>
-		
-		<?php endif; ?>
+  		<?php if (have_posts()) : ?>
 
-	</div>
+  		<?php while (have_posts()) : the_post(); ?>
+		
+  		<?php simple_boostrap_display_post(['multiple_on_page' => true]); ?>
+		
+  		<?php endwhile; ?>	
+		
+  		<?php simple_boostrap_page_navi(); ?>	
+		
+  		<?php else : ?>
+		
+  		<article id="post-not-found" class="block">
+  		    <p><?php _e("No posts found.", "default"); ?></p>
+  		</article>
+		
+  		<?php endif; ?>
 
-	<?php get_sidebar("left"); ?>
-	<?php get_sidebar("right"); ?>
+  	</div>
+
+  	<?php get_sidebar("left"); ?>
+  	<?php get_sidebar("right"); ?>
+
+  </div>
 
 </div>
 
