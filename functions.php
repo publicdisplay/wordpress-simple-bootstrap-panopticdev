@@ -9,19 +9,20 @@ function simple_boostrap_theme_support() {
         'gallery',
         'caption'
     ));
+    add_theme_support('post-formats', array(   // support certain post formats
+        'link',
+    ));
     add_theme_support('post-thumbnails');      // wp thumbnails (sizes handled in functions.php)
     set_post_thumbnail_size(125, 125, true);   // default thumb size
     add_theme_support('automatic-feed-links'); // rss thingy
-    add_theme_support( 'title-tag' );
-    register_nav_menus(                        // wp3+ menus
-        array( 
-            'main_nav'    => __('Main Menu', 'simple-bootstrap-panopticdev'),
-            'button_nav'  => __('Main Menu Buttons', 'simple-bootstrap-panopticdev'),
-            'footer_nav'  => __('Footer Menu', 'simple-bootstrap-panopticdev'),
-            'social_nav'  => __('Social Menu', 'simple-bootstrap-panopticdev'),
-            'contact_nav' => __('Contact Aside Menu', 'simple-bootstrap-panopticdev'),
-        )
-    );
+    add_theme_support('title-tag');
+    register_nav_menus(array(                  // wp3+ menus
+        'main_nav'    => __('Main Menu', 'simple-bootstrap-panopticdev'),
+        'button_nav'  => __('Main Menu Buttons', 'simple-bootstrap-panopticdev'),
+        'footer_nav'  => __('Footer Menu', 'simple-bootstrap-panopticdev'),
+        'social_nav'  => __('Social Menu', 'simple-bootstrap-panopticdev'),
+        'contact_nav' => __('Contact Aside Menu', 'simple-bootstrap-panopticdev'),
+    ));
     add_image_size( 'simple_boostrap_featured', 1140, 1140 * (9 / 21), true);
     add_image_size( 'Medium-Large', 512, 512, false);
     load_theme_textdomain( 'simple-bootstrap-panopticdev', get_template_directory() . '/languages' );
@@ -31,7 +32,7 @@ add_action('after_setup_theme','simple_boostrap_theme_support');
 function simple_boostrap_add_custom_image_sizes( $sizes ) {
     return array_merge( $sizes, array(
         'medium-large' => __( 'Medium-Large' ),
-    ) );
+    ));
 }
 add_filter( 'image_size_names_choose', 'simple_boostrap_custom_image_sizes');
 
@@ -373,7 +374,11 @@ function simple_bootstrap_display_post_meta() {
 
     <ul class="meta text-muted list-inline">
         <li>
+            <?php if (has_post_format('link')) : ?>
+            <a href="<?php simple_boostrap_the_link_url() ?>">
+            <?php else: ?>
             <a href="<?php the_permalink() ?>">
+            <?php endif ?>
                 <span class="glyphicon glyphicon-time"></span>
                 <?php the_date(); ?>
             </a>
@@ -415,6 +420,11 @@ function simple_boostrap_page_navi() {
     <?php
 }
 
+function simple_boostrap_the_link_url() {
+    $has_url = get_url_in_content( get_the_content() );
+    echo $has_url ? $has_url : apply_filters( 'the_permalink', get_permalink() );
+}
+
 function simple_boostrap_display_post($args = []) {
     $multiple_on_page  = isset($args['multiple_on_page']) ? $args['multiple_on_page'] : false;
     $show_meta         = isset($args['show_meta']) ? $args['show_meta'] : true;
@@ -425,20 +435,33 @@ function simple_boostrap_display_post($args = []) {
         
         <header>
             
-            <?php if ($multiple_on_page) : ?>
             <div class="article-header">
-                <h2 class="h1"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
+                <?php if ($multiple_on_page) : ?>
+                <h2 class="h1">
+                    <?php if (has_post_format('link')) : ?>
+                    <a href="<?php simple_boostrap_the_link_url() ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+                    <?php else: ?>
+                    <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+                    <?php endif ?>
+                <?php else: ?>
+                <h1>
+                    <?php if (has_post_format('link')) : ?>
+                    <a href="<?php simple_boostrap_the_link_url() ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+                    <?php else: ?>
+                    <?php the_title(); ?>
+                    <?php endif ?>
+                </h1>
+                <?php endif ?>
             </div>
-            <?php else: ?>
-            <div class="article-header">
-                <h1><?php the_title(); ?></h1>
-            </div>
-            <?php endif ?>
 
             <?php if (has_post_thumbnail()) { ?>
             <div class="featured-image">
                 <?php if ($multiple_on_page) : ?>
-                <a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>"><?php the_post_thumbnail('simple_boostrap_featured'); ?></a>
+                    <?php if (has_post_format('link')) : ?>
+                    <a href="<?php simple_boostrap_the_link_url() ?>" title="<?php the_title_attribute(); ?>"><?php the_post_thumbnail('simple_boostrap_featured'); ?></a>
+                    <?php else: ?>
+                    <a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>"><?php the_post_thumbnail('simple_boostrap_featured'); ?></a>
+                    <?php endif ?>
                 <?php else: ?>
                 <?php the_post_thumbnail('simple_boostrap_featured'); ?>
                 <?php endif ?>
@@ -457,7 +480,7 @@ function simple_boostrap_display_post($args = []) {
                 <div class="col-md-8">
             <?php endif ?>
             <?php
-            if ($multiple_on_page) {
+            if ($multiple_on_page && !has_post_format('link')) {
                 the_excerpt();
             } else {
                 the_content();
