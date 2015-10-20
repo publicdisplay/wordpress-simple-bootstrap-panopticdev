@@ -374,19 +374,21 @@ function simple_bootstrap_display_post_meta() {
 
     <ul class="meta text-muted list-inline">
         <li>
-            <?php if (has_post_format('link')) : ?>
-            <a href="<?php simple_boostrap_the_link_url() ?>">
-            <?php else: ?>
+            <?php if (!has_post_format('link')) : ?>
             <a href="<?php the_permalink() ?>">
             <?php endif ?>
                 <span class="glyphicon glyphicon-time"></span>
                 <?php the_date(); ?>
+            <?php if (!has_post_format('link')) : ?>
             </a>
+            <?php endif ?>
         </li>
         <li>
             <a href="<?php echo get_author_posts_url(get_the_author_meta('ID'));?>">
                 <span class="glyphicon glyphicon-user"></span>
+                <?php if (!has_post_format('link')) : ?>
                 <?php the_author(); ?>
+                <?php endif ?>
             </a>
         </li>
         <?php if ( ! post_password_required() && ( comments_open() || get_comments_number() ) ) : ?>
@@ -439,14 +441,14 @@ function simple_boostrap_display_post($args = []) {
                 <?php if ($multiple_on_page) : ?>
                 <h2 class="h1">
                     <?php if (has_post_format('link')) : ?>
-                    <a href="<?php simple_boostrap_the_link_url() ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+                    <a href="<?php simple_boostrap_the_link_url() ?>" title="<?php the_title_attribute(); ?>" target="_blank"><?php the_title(); ?></a>
                     <?php else: ?>
                     <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
                     <?php endif ?>
                 <?php else: ?>
                 <h1>
                     <?php if (has_post_format('link')) : ?>
-                    <a href="<?php simple_boostrap_the_link_url() ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+                    <a href="<?php simple_boostrap_the_link_url() ?>" title="<?php the_title_attribute(); ?>" target="_blank"><?php the_title(); ?></a>
                     <?php else: ?>
                     <?php the_title(); ?>
                     <?php endif ?>
@@ -458,7 +460,7 @@ function simple_boostrap_display_post($args = []) {
             <div class="featured-image">
                 <?php if ($multiple_on_page) : ?>
                     <?php if (has_post_format('link')) : ?>
-                    <a href="<?php simple_boostrap_the_link_url() ?>" title="<?php the_title_attribute(); ?>"><?php the_post_thumbnail('simple_boostrap_featured'); ?></a>
+                    <a href="<?php simple_boostrap_the_link_url() ?>" title="<?php the_title_attribute(); ?>" target="_blank"><?php the_post_thumbnail('simple_boostrap_featured'); ?></a>
                     <?php else: ?>
                     <a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>"><?php the_post_thumbnail('simple_boostrap_featured'); ?></a>
                     <?php endif ?>

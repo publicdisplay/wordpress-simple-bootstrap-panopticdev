@@ -16,7 +16,7 @@ template. Mostly this just gets rid of the "Category: Foo" block at the top
   		<div class="block">
         <header>
           <div class="article-header">
-            <h1>Press Releases</h1>
+            <h1>Press</h1>
           </div>
         </header>
       </div>
