@@ -202,11 +202,18 @@ footer {
 
 // Medium grid and larger
 @media (min-width: @screen-md-min) {
+  body.landing {
+    #page-content > .container {
+      margin-top: 32px;
+    }
+  }
+  
   header {      
     .navbar-default {
       background: url(./images/branding/bg-header-bordered.jpg) repeat-x 0% 100%;
       margin-bottom: 0;
       border-width: 0;
+      min-height: 80px;
         
       .navbar-header {
         .navbar-brand {
