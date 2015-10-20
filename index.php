@@ -8,7 +8,7 @@
 
 		<?php while (have_posts()) : the_post(); ?>
 		
-		<?php simple_boostrap_display_post(true); ?>
+		<?php simple_boostrap_display_post(['multiple_on_page' => true]); ?>
 		
 		<?php endwhile; ?>	
 		

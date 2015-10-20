@@ -12,8 +12,8 @@ Template Name: Full Width Page
 
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 		
-		<?php simple_boostrap_display_post(false, false); ?>
-		
+		<?php simple_boostrap_display_post(['show_meta' => false]); ?>
+
 		<?php comments_template(); ?>
 		
 		<?php endwhile; ?>	
@@ -26,7 +26,7 @@ Template Name: Full Width Page
 		
 		<?php endif; ?>
 
-    <?php include 'start-a-project-bar.php' ?>
+    <?php include dirname(__FILE__) . '/start-a-project-bar.php' ?>
 
 	</div>
 

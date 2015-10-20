@@ -415,7 +415,11 @@ function simple_boostrap_page_navi() {
     <?php
 }
 
-function simple_boostrap_display_post($multiple_on_page = false, $show_meta = true, $use_contact_aside = false) { ?>
+function simple_boostrap_display_post($args = []) {
+    $multiple_on_page  = isset($args['multiple_on_page']) ? $args['multiple_on_page'] : false;
+    $show_meta         = isset($args['show_meta']) ? $args['show_meta'] : true;
+    $use_contact_aside = isset($args['use_contact_aside']) ? $args['use_contact_aside'] : false;
+?>
 
     <article id="post-<?php the_ID(); ?>" <?php post_class("block"); ?> role="article">
         

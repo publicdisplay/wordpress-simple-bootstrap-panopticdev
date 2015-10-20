@@ -4,17 +4,21 @@
 
 	<div id="main" class="<?php simple_boostrap_main_classes(); ?>" role="main">
 		
-		<div class="block block-title">
-			<h1 class="archive_title">
-				<?php echo get_the_archive_title() ?>
-			</h1>
+		<div class="block">
+      <header>
+        <div class="article-header">
+          <h1>
+            <?php echo get_the_archive_title() ?>
+          </h1>
+        </div>
+      </header>
 		</div>
 
 		<?php if (have_posts()) : ?>
 
 		<?php while (have_posts()) : the_post(); ?>
 		
-		<?php simple_boostrap_display_post(true); ?>
+		<?php simple_boostrap_display_post(['multiple_on_page' => true]); ?>
 		
 		<?php endwhile; ?>	
 		

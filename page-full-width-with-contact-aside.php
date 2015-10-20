@@ -12,7 +12,7 @@ Template Name: Full Width Page with Contact Aside
 
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 		
-		<?php simple_boostrap_display_post(false, false, true); ?>
+		<?php simple_boostrap_display_post(['show_meta' => false, 'use_contact_aside' => true]); ?>
 		
 		<?php comments_template(); ?>
 		
@@ -26,7 +26,7 @@ Template Name: Full Width Page with Contact Aside
 		
 		<?php endif; ?>
 
-    <?php include 'start-a-project-bar.php' ?>
+    <?php include dirname(__FILE__) . '/start-a-project-bar.php' ?>
 
 	</div>
 
