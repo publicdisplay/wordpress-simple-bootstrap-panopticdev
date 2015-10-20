@@ -34,7 +34,8 @@ body {
   .block;
 }
 
-.wpcf7-form-control.wpcf7-submit.btn.btn-primary, #mc-embedded-subscribe {
+.wpcf7-form-control.wpcf7-submit.btn.btn-primary, 
+#mc-embedded-subscribe {
   .btn;
   .btn-default;
   text-shadow: 0 0 0;
@@ -110,10 +111,11 @@ body.home {
   .front-page-bottom {
     background: #fbfbfb url(./images/branding/bg-wrapper.jpg) repeat;
     
-    .front-page-bottom-top {
+    .front-page-bottom-clients {
       padding: 15px 0 0;
       background: #f0f3f8 url(./images/branding/bg-clients-list.jpg) repeat;
-      
+      border-bottom: 1px solid #fff;
+
       header {
         h1, .h1 {
           border-bottom: 4px solid @brand-primary;
@@ -149,11 +151,28 @@ body.home {
       }
     }
     
-    .front-page-bottom-bottom {
-      border-top: 1px solid #fff;
-      padding: 40px 0 76px;
-      /* background-color: #f7f8fc; */
-      /* background-image: url(../images/bg-box-holder.jpg); */
+    .front-page-bottom-testimonials {
+      padding: 50px 0 0;
+
+      blockquote {
+        font-size: 1em;
+        line-height: 1.4em;
+        margin-bottom: 0;
+
+        q {
+          display: block;
+          margin: 0 0 1em;
+        }
+
+        cite {
+          display: block;
+          padding: 0 1px;
+        }
+      }
+    }
+      
+    .front-page-bottom-start-a-project {
+      padding: 20px 0 50px;
       
       .start-box {
         margin-bottom: 0;
