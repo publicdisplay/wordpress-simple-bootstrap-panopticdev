@@ -103,7 +103,7 @@
         
         <div class="front-page-bottom-start-a-project">
             <div class="container">
-                <?php include dirname(__FILE__) . '/start-a-project-bar.php' ?>
+                <?php get_template_part( 'content', 'start-a-project' ); ?>
             </div>
         </div>
     </article>
