@@ -1,36 +1,25 @@
-<?php get_header(); ?>
+<?php
+/*
+Template Name: Standard Sidebars, No S-a-P Widget (Default)
+*/
+?>
 
-<div class="container">
+<?php get_template_part( 'content', 'standard-top' ); ?>
 
-  <div id="content" class="row">
+<?php if (have_posts()) : ?>
 
-  	<div id="main" class="<?php simple_boostrap_main_classes(); ?>" role="main">
+  <?php while (have_posts()) : the_post(); ?>
 
-  		<?php if (have_posts()) : ?>
+    <?php simple_boostrap_display_post(['multiple_on_page' => true]); ?>
 
-  		<?php while (have_posts()) : the_post(); ?>
-		
-  		<?php simple_boostrap_display_post(['multiple_on_page' => true]); ?>
-		
-  		<?php endwhile; ?>	
-		
-  		<?php simple_boostrap_page_navi(); ?>	
-		
-  		<?php else : ?>
-		
-  		<article id="post-not-found" class="block">
-  		    <p><?php _e("No posts found.", "default"); ?></p>
-  		</article>
-		
-  		<?php endif; ?>
+  <?php endwhile; ?>	
 
-  	</div>
+  <?php simple_boostrap_page_navi(); ?>	
 
-  	<?php get_sidebar("left"); ?>
-  	<?php get_sidebar("right"); ?>
+<?php else : ?>
 
-  </div>
+  <?php get_template_part( 'content', 'not-found' ); ?>
 
-</div>
+<?php endif; ?>
 
-<?php get_footer(); ?>
+<?php get_template_part( 'content', 'standard-bottom' ); ?>

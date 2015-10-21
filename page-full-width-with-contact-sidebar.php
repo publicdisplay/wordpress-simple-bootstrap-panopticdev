@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Full Width, No Sidebars, S-a-P Widget at Bottom
+Template Name: Contact Sidebar, S-a-P Widget at Bottom
 */
 ?>
 
@@ -12,7 +12,7 @@ Template Name: Full Width, No Sidebars, S-a-P Widget at Bottom
 
     <div class="row">
 
-      <div id="main" role="main" class="col-sm-12">
+      <div id="main" role="main" class="col-md-8">
 
         <?php if (have_posts()) : ?>
 
@@ -31,6 +31,30 @@ Template Name: Full Width, No Sidebars, S-a-P Widget at Bottom
         <?php endif; ?>
 
       </div><!-- END #main -->
+
+      <div id="sidebar-right" class="col-md-4" role="complementary">
+
+        <div class="vertical-nav">
+
+          <?php if (has_nav_menu("contact_nav")): ?>
+          <div class="widget widget_nav_menu">
+
+            <h4 class="widgettitle">Contact Us</h4>
+
+            <div class="menu-contact-aside-links-container">
+
+              <?php simple_bootstrap_display_contact_aside_menu(); ?>
+
+            </div>
+
+          </div>
+          <?php endif ?>
+
+          <?php dynamic_sidebar( 'contact-aside' ); ?>
+
+        </div>
+
+      </div>
 
     </div><!-- END .row -->
 

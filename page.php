@@ -1,37 +1,19 @@
-<?php get_header(); ?>
+<?php get_template_part( 'content', 'standard-top' ); ?>
 
-<div class="container">
+<?php if (have_posts()) : ?>
 
-  <div id="content" class="row">
+  <?php while (have_posts()) : the_post(); ?>
 
-  	<div id="main" class="<?php simple_boostrap_main_classes(); ?>" role="main">
+    <?php simple_boostrap_display_post(['show_meta' => false]); ?>
 
-  		<?php if (have_posts()) : ?>
+  <?php endwhile; ?>
 
-  		<?php while (have_posts()) : the_post(); ?>
-		
-  		<?php simple_boostrap_display_post(['show_meta' => false]); ?>
-		
-  		<?php comments_template('',true); ?>
-		
-  		<?php endwhile; ?>		
-		
-  		<?php else : ?>
-		
-  		<article id="post-not-found" class="block">
-  		    <p><?php _e("No pages found.", "default"); ?></p>
-  		</article>
-		
-  		<?php endif; ?>
-    
-  	</div>
+  <?php simple_boostrap_page_navi(); ?>
 
-  	<?php get_sidebar("left"); ?>
-  	<?php get_sidebar("right"); ?>
+<?php else : ?>
 
-  </div>
+  <?php get_template_part( 'content', 'not-found' ); ?>
 
-</div>
+<?php endif; ?>
 
-<?php get_footer(); ?>
-
+<?php get_template_part( 'content', 'standard-bottom' ); ?>

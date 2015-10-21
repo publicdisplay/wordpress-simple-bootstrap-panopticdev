@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Minimal Landing Page
+Template Name: Full Width, Minimal Layout Landing Page, No Title Block
 */
 ?>
 
@@ -37,54 +37,50 @@ Template Name: Minimal Landing Page
 
       <div class="container">
 
-        <div id="content" class="row">
+        <div id="content" class="block">
 
-        	<div id="main" class="col-lg-12" role="main">
+          <div class="row">
 
+            <div id="main" role="main" class="col-sm-12">
 
-        		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+              <?php if (have_posts()) : ?>
 
-        		<div class="block">
-              <header>
-                <div class="article-header">
-                  <h1><?php the_title(); ?></h1>
-                </div>
-              </header>
-            </div>
+                <?php while (have_posts()) : the_post(); ?>
 
-            <article id="post-<?php the_ID(); ?>" <?php post_class("block"); ?> role="article">
-            		<?php the_content(); ?>
-        		</article>
-		
-            <?php endwhile; ?>	
+                  <article id="post-<?php the_ID(); ?>" <?php post_class("section"); ?> role="article">
+                    <section class="post_content">
+                      <?php the_content(); ?>
+                    </section>
+                  </article>
 
-        		<?php else : ?>
+                <?php endwhile; ?>
 
-        		<article id="post-not-found" class="block">
-                <p><?php _e("No pages found.", "default"); ?></p>
-        		</article>
+              <?php else : ?>
 
-            <?php endif; ?>
-            
-        	</div>
+                <?php get_template_part( 'content', 'not-found' ); ?>
 
-        </div>
-  
-      </div>
+              <?php endif; ?>
 
-		
+            </div><!-- END #main -->
+
+          </div><!-- END .row -->
+
+        </div><!-- END #content.block -->
+
+      </div><!-- END .container -->
+
     </div><!-- END #page-content -->
-        
+
     <footer>
-        <div id="inner-footer" class="vertical-nav">
-            <div class="container">
-                <div class="row" id="copyright">
-                    <div class="col-md-12 text-center">
-                        <p><?php _e('&copy; 2010 &mdash; ' . date("Y") . ' Panoptic Development, Inc. All Rights Reserved.', 'simple-bootstrap-panopticdev') ?></p>
-                    </div>
-                </div>
+      <div id="inner-footer" class="vertical-nav">
+        <div class="container">
+          <div class="row" id="copyright">
+            <div class="col-md-12 text-center">
+              <p><?php _e('&copy; 2010 &mdash; ' . date("Y") . ' Panoptic Development, Inc. All Rights Reserved.', 'simple-bootstrap-panopticdev') ?></p>
             </div>
+          </div>
         </div>
+      </div>
     </footer>
 
   </div><!-- END #content-wrapper -->

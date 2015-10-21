@@ -21,7 +21,7 @@ function simple_boostrap_theme_support() {
         'button_nav'  => __('Main Menu Buttons', 'simple-bootstrap-panopticdev'),
         'footer_nav'  => __('Footer Menu', 'simple-bootstrap-panopticdev'),
         'social_nav'  => __('Social Menu', 'simple-bootstrap-panopticdev'),
-        'contact_nav' => __('Contact Aside Menu', 'simple-bootstrap-panopticdev'),
+        'contact_nav' => __('Contact Sidebar Menu', 'simple-bootstrap-panopticdev'),
     ));
     add_image_size( 'simple_boostrap_featured', 1140, 1140 * (9 / 21), true);
     add_image_size( 'Medium-Large', 512, 512, false);
@@ -68,7 +68,7 @@ function simple_boostrap_register_sidebars() {
     register_sidebar(array(
         'id' => 'sidebar-right',
         'name' => __('Right Sidebar', 'simple-bootstrap-panopticdev'),
-        'description' => __('A right-hand sidebar for the default post format, separate from the page content.', 'simple-bootstrap-panopticdev'),
+        'description' => __('A right-hand sidebar for the default post format.', 'simple-bootstrap-panopticdev'),
         'before_widget' => '<div id="%1$s" class="widget %2$s">',
         'after_widget' => '</div>',
         'before_title' => '<h4 class="widgettitle">',
@@ -78,7 +78,7 @@ function simple_boostrap_register_sidebars() {
     register_sidebar(array(
     	'id' => 'sidebar-left',
     	'name' => __('Left Sidebar', 'simple-bootstrap-panopticdev'),
-      'description' => __('A left-hand sidebar for the default post format, separate from the page content.', 'simple-bootstrap-panopticdev'),
+      'description' => __('A left-hand sidebar for the default post format.', 'simple-bootstrap-panopticdev'),
     	'before_widget' => '<div id="%1$s" class="widget %2$s">',
     	'after_widget' => '</div>',
     	'before_title' => '<h4 class="widgettitle">',
@@ -88,7 +88,7 @@ function simple_boostrap_register_sidebars() {
     register_sidebar(array(
       'id' => 'footer1',
       'name' => __('Footer', 'simple-bootstrap-panopticdev'),
-      'description' => __('Content for the top part of the footer area in the default and full-page post format. The Social Menu is already included as the last widget for this area. Each additional widget is afforded a 1/3 of the available width on the desktop version.', 'simple-bootstrap-panopticdev'),
+      'description' => __('Content for the top part of the footer area in the default and full-page post formats. The Social Menu is already included as the last widget for this area. Each additional widget is afforded a 1/3 of the available width on the desktop version.', 'simple-bootstrap-panopticdev'),
       'before_widget' => '<div id="%1$s" class="widget col-xs-12 col-sm-6 col-md-4 %2$s">',
       'after_widget' => '</div>',
       'before_title' => '<h4 class="widgettitle">',
@@ -97,8 +97,8 @@ function simple_boostrap_register_sidebars() {
     
     register_sidebar(array(
     	'id' => 'contact-aside',
-    	'name' => __('Contact Aside', 'simple-bootstrap-panopticdev'),
-    	'description' => __('Used only in the \'full-page with contact aside\' post format. The Contact Aside Menu is already included as the first widget for this area.', 'simple-bootstrap-panopticdev'),
+    	'name' => __('Contact Sidebar', 'simple-bootstrap-panopticdev'),
+    	'description' => __('Used only in the \'Contact Sidebar\' post format. The Contact Sidebar Menu is already included as the first widget for this area.', 'simple-bootstrap-panopticdev'),
     	'before_widget' => '<div id="%1$s" class="widget %2$s">',
     	'after_widget' => '</div>',
     	'before_title' => '<h4 class="widgettitle">',
@@ -411,7 +411,7 @@ function simple_boostrap_page_navi() {
     ?>
 
     <?php if (get_next_posts_link() || get_previous_posts_link()) { ?>
-        <nav class="block">
+        <nav class="section">
             <ul class="pager pager-unspaced">
                 <li class="previous"><?php next_posts_link('<span class="glyphicon glyphicon-chevron-left"></span> ' . __('Older posts', "default")); ?></li>
                 <li class="next"><?php previous_posts_link(__('Newer posts', "default") . ' <span class="glyphicon glyphicon-chevron-right"></span>'); ?></li>
@@ -430,10 +430,11 @@ function simple_boostrap_the_link_url() {
 function simple_boostrap_display_post($args = []) {
     $multiple_on_page  = isset($args['multiple_on_page']) ? $args['multiple_on_page'] : false;
     $show_meta         = isset($args['show_meta']) ? $args['show_meta'] : true;
-    $use_contact_aside = isset($args['use_contact_aside']) ? $args['use_contact_aside'] : false;
+    
+    $extra_classes = ($multiple_on_page) ? "section multiple-results" : "section";
 ?>
 
-    <article id="post-<?php the_ID(); ?>" <?php post_class("block"); ?> role="article">
+    <article id="post-<?php the_ID(); ?>" <?php post_class($extra_classes); ?> role="article">
         
         <header>
             
@@ -477,10 +478,6 @@ function simple_boostrap_display_post($args = []) {
         </header>
     
         <section class="post_content">
-            <?php if ($use_contact_aside) : ?>
-            <div class="row">
-                <div class="col-md-8">
-            <?php endif ?>
             <?php
             if ($multiple_on_page && !has_post_format('link')) {
                 the_excerpt();
@@ -489,13 +486,6 @@ function simple_boostrap_display_post($args = []) {
                 wp_link_pages();
             }
             ?>
-            <?php if ($use_contact_aside) : ?>
-                </div>
-                <div class="col-md-4 aside">
-                   <?php get_sidebar( 'contact-aside' ); ?>
-                </div>
-            </div>
-            <?php endif ?>
         </section>
         
         <footer>

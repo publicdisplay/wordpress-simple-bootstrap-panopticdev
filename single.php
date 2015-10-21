@@ -1,43 +1,28 @@
-<?php get_header(); ?>
+<?php get_template_part( 'content', 'standard-top' ); ?>
 
-<div class="container">
+<?php if (have_posts()) : ?>
 
-  <div id="content" class="row">
+  <?php while (have_posts()) : the_post(); ?>
 
-  	<div id="main" class="<?php simple_boostrap_main_classes(); ?>" role="main">
+    <?php simple_boostrap_display_post(['show_meta' => false]); ?>
 
-  		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-		
-  		<?php simple_boostrap_display_post(['show_meta' => false]); ?>
-		
-  		<?php comments_template('',true); ?>
-		
-  		<?php if (get_next_post() || get_previous_post()) { ?>
-  		<nav class="block">
-  			<ul class="pager pager-unspaced">
-  				<li class="previous"><?php previous_post_link('%link', "&laquo; " . __( 'Previous Post', "default")); ?></li>
-  				<li class="next"><?php next_post_link('%link', __( 'Next Post', "default") . " &raquo;"); ?></li>
-  			</ul>
-  		</nav>
-  		<?php } ?>
-		
-  		<?php endwhile; ?>			
-		
-  		<?php else : ?>
-		
-  		<article id="post-not-found" class="block">
-  		    <p><?php _e("No posts found.", "default"); ?></p>
-  		</article>
-		
-  		<?php endif; ?>
+    <?php comments_template('',true); ?>
 
-  	</div>
+    <?php if (get_next_post() || get_previous_post()) { ?>
+    <nav class="section">
+      <ul class="pager pager-unspaced">
+        <li class="previous"><?php previous_post_link('%link', '<span class="glyphicon glyphicon-chevron-left"></span> ' . __( 'Previous Post', "default")); ?></li>
+        <li class="next"><?php next_post_link('%link', __( 'Next Post', "default") . ' <span class="glyphicon glyphicon-chevron-right"></span>'); ?></li>
+      </ul>
+    </nav>
+    <?php } ?>
 
-  	<?php get_sidebar("left"); ?>
-  	<?php get_sidebar("right"); ?>
+  <?php endwhile; ?>
 
-  </div>
+<?php else : ?>
 
-</div>
+  <?php get_template_part( 'content', 'not-found' ); ?>
 
-<?php get_footer(); ?>
+<?php endif; ?>
+
+<?php get_template_part( 'content', 'standard-bottom' ); ?>

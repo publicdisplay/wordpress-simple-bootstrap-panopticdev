@@ -3,80 +3,59 @@
  * The WordPress template hierarchy first checks for any
  * MIME-types and then looks for the attachment.php file.
  *
- * @link codex.wordpress.org/Template_Hierarchy#Attachment_display 
- */ 
+ * @link codex.wordpress.org/Template_Hierarchy#Attachment_display
+ */
+?>
 
-get_header(); ?>
+<?php get_template_part( 'content', 'standard-top' ); ?>
 
-<div class="container">
+<?php if (have_posts()) : ?>
 
-  <div id="content" class="row">
+  <?php while (have_posts()) : the_post(); ?>
+  <article id="post-<?php the_ID(); ?>" <?php post_class("section"); ?> role="article">
+    <header>
+      <div class="article-header">
+        <h1 itemprop="headline">
+          <a href="<?php echo get_permalink($post->post_parent); ?>" rev="attachment"><?php echo esc_html(get_the_title($post->post_parent)); ?></a> &raquo; <?php the_title(); ?>
+        </h1>
+      </div>
+    </header>
 
-  	<div id="main" class="<?php simple_boostrap_main_classes(); ?>" role="main">
+    <section class="post_content" itemprop="articleBody">
+      <!-- To display current image in the photo gallery -->
+      <div class="attachment-img">
+        <a href="<?php echo wp_get_attachment_url($post->ID); ?>">
+          <?php
+          $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );
 
-  		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-		
-  		<article id="post-<?php the_ID(); ?>" <?php post_class("block"); ?> role="article">
-			
-  			<header> 
-				
-  				<div class="article-header"><h1 itemprop="headline"><a href="<?php echo get_permalink($post->post_parent); ?>" rev="attachment"><?php echo esc_html(get_the_title($post->post_parent)); ?></a> &raquo; <?php the_title(); ?></h1></div>
-				
-				
-  				<?php simple_bootstrap_display_post_meta() ?>
-			
-  			</header>
-		
-  			<section class="post_content" itemprop="articleBody">
-				
-  				<!-- To display current image in the photo gallery -->
-  				<div class="attachment-img">
-  				      <a href="<?php echo wp_get_attachment_url($post->ID); ?>">
-				      							      
-  				      <?php 
-  				      	$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' ); 
-				       
-  					      if ($image) : ?>
-  					          <img src="<?php echo $image[0]; ?>" alt="" />
-  					      <?php endif; ?>
-				      
-  				      </a>
-  				</div>
-				
-  			</section>
-			
-  			<footer>
-  				<?php the_tags('<p class="tags">', ' ', '</p>'); ?>
-  			</footer>
+          if ($image) : 
+          ?>
+            <img src="<?php echo $image[0]; ?>" alt="" />
+          <?php endif; ?>
+        </a>
+      </div>
+    </section>
 
-  			<nav>
-  			  	<ul class="pager">
-  			    	<li class="previous"><?php next_image_link( false, __( '&laquo; Previous', "default")); ?></li>
-  			    	<li class="next"><?php previous_image_link( false, __( 'Next &raquo;', "default")); ?></li>
-  			  	</ul>
-  			</nav>
-		
-  		</article>
-		
-  		<?php comments_template(); ?>
-		
-  		<?php endwhile; ?>			
-		
-  		<?php else : ?>
-		
-  		<article id="post-not-found" class="block">
-  		    <p><?php _e("No items found.", "default"); ?></p>
-  		</article>
-		
-  		<?php endif; ?>
+    <footer>
+      <?php the_tags('<p class="tags">', ' ', '</p>'); ?>
+    </footer>
+  </article>
 
-  	</div>
-	
-  	<?php get_sidebar("left"); ?>
-  	<?php get_sidebar("right"); ?>
+  <nav class="section">
+    <ul class="pager pager-unspaced">
+      <li class="previous"><?php next_image_link( false, '<span class="glyphicon glyphicon-chevron-left"></span> ' . __( 'Previous Image', "default")); ?></li>
+      <li class="next"><?php previous_image_link( false, __( 'Next Image', "default") . ' <span class="glyphicon glyphicon-chevron-right"></span>'); ?></li>
+    </ul>
+  </nav>
 
-  </div>
+  <?php comments_template(); ?>
 
-</div>
+  <?php endwhile; ?>
 
-<?php get_footer(); ?>
+<?php else : ?>
+
+  <?php get_template_part( 'content', 'not-found' ); ?>
+
+<?php endif; ?>
+
+<?php get_template_part( 'content', 'standard-bottom' ); ?>

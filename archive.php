@@ -1,46 +1,28 @@
-<?php get_header(); ?>
+<?php get_template_part( 'content', 'standard-top' ); ?>
 
-<div class="container">
-
-  <div id="content" class="row">
-
-  	<div id="main" class="<?php simple_boostrap_main_classes(); ?>" role="main">
-		
-  		<div class="block">
-        <header>
-          <div class="article-header">
-            <h1>
-              <?php echo get_the_archive_title() ?>
-            </h1>
-          </div>
-        </header>
-  		</div>
-
-  		<?php if (have_posts()) : ?>
-
-  		<?php while (have_posts()) : the_post(); ?>
-		
-  		<?php simple_boostrap_display_post(['multiple_on_page' => true]); ?>
-		
-  		<?php endwhile; ?>	
-		
-  		<?php simple_boostrap_page_navi(); ?>	
-		
-  		<?php else : ?>
-		
-  		<article id="post-not-found" class="block">
-  		    <p><?php _e("No items found.", "default"); ?></p>
-  		</article>
-		
-  		<?php endif; ?>
-
-  	</div>
-
-  	<?php get_sidebar("left"); ?>
-  	<?php get_sidebar("right"); ?>
-
+<header>
+  <div class="block-header">
+    <h1>
+      <?php echo get_the_archive_title() ?>
+    </h1>
   </div>
+</header>
 
-</div>
+<?php if (have_posts()) : ?>
 
-<?php get_footer(); ?>
+  <?php while (have_posts()) : the_post(); ?>
+
+    <?php simple_boostrap_display_post(['multiple_on_page' => true]); ?>
+
+  <?php endwhile; ?>
+
+  <?php simple_boostrap_page_navi(); ?>
+
+<?php else : ?>
+
+  <?php get_template_part( 'content', 'not-found' ); ?>
+
+<?php endif; ?>
+
+<?php get_template_part( 'content', 'standard-bottom' ); ?>
+
