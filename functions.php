@@ -34,7 +34,7 @@ function simple_boostrap_add_custom_image_sizes( $sizes ) {
         'medium-large' => __( 'Medium-Large' ),
     ));
 }
-add_filter( 'image_size_names_choose', 'simple_boostrap_custom_image_sizes');
+add_filter( 'image_size_names_choose', 'simple_boostrap_add_custom_image_sizes');
 
 function simple_bootstrap_theme_scripts() { 
     // For child themes
