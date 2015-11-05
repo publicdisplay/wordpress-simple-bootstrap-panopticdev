@@ -4,7 +4,7 @@
 
   <?php while (have_posts()) : the_post(); ?>
 
-    <?php simple_boostrap_display_post(['show_meta' => false]); ?>
+    <?php simple_boostrap_display_post(['show_meta' => true]); ?>
 
     <?php comments_template('',true); ?>
 
