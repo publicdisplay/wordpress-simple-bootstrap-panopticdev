@@ -10,6 +10,10 @@
 
 body {
   background: #001 url(./images/branding/bg-body.jpg);
+  
+  &.page-template-page-landing-bare-bones {
+    background: #fff;
+  }
 }
 
 .btn-primary {
@@ -236,9 +240,11 @@ blockquote {
 
 // Medium grid and larger
 @media (min-width: @screen-md-min) {
-  body.landing {
-    #page-content > .container {
-      margin-top: 32px;
+  body {
+    &.landing {
+      #page-content > .container {
+        margin-top: 32px;
+      }
     }
   }
   

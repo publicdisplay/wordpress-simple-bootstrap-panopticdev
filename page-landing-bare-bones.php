@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Minimal Layout Landing Page, No Title Block
+Template Name: Bare Bones Landing Page - No Background, Header, or Title Block
 */
 ?>
 
@@ -14,30 +14,15 @@ Template Name: Minimal Layout Landing Page, No Title Block
   <?php wp_head(); ?>
 </head>
 
-<body <?php body_class("landing"); ?>>
+<body <?php body_class("landing-bare-bones"); ?>>
 
   <div id="content-wrapper">
-
-    <header>
-      <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-          <div class="navbar-header">
-            <span class="navbar-brand" title="<?php bloginfo('description'); ?>">
-              <img class="hidden-xs hidden-sm" width="108" height="141" src="<?php echo get_template_directory_uri().'/images/branding/logo.png' ?>" alt="<?php bloginfo('name'); ?>">
-              <span class="hidden-md hidden-lg">
-                <?php bloginfo('name'); ?>
-              </span>
-            </span>
-          </div>
-        </div>
-      </nav>
-    </header>
 
     <div id="page-content">
 
       <div class="container">
 
-        <div id="content" class="block">
+        <div id="content">
 
           <div class="row">
 
@@ -70,18 +55,6 @@ Template Name: Minimal Layout Landing Page, No Title Block
       </div><!-- END .container -->
 
     </div><!-- END #page-content -->
-
-    <footer>
-      <div id="inner-footer" class="vertical-nav">
-        <div class="container">
-          <div class="row" id="copyright">
-            <div class="col-md-12 text-center">
-              <p><?php _e('&copy; 2010 &mdash; ' . date("Y") . ' Panoptic Development, Inc. All Rights Reserved.', 'simple-bootstrap-panopticdev') ?></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
 
   </div><!-- END #content-wrapper -->
 

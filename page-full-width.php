@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Full Width, No Sidebars, S-a-P Widget at Bottom
+Template Name: No Sidebars, S-a-P Widget at Bottom
 */
 ?>
 
